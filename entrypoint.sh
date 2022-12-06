@@ -30,22 +30,22 @@ fi
 echo ${QR_Path}
 
 
-if [ "$VER" = "latest" ]; then
-  V_VER=`wget -qO- "https://api.github.com/repos/shadowsocks/v2ray-plugin/releases/latest" | sed -n -r -e 's/.*"tag_name".+?"([vV0-9\.]+?)".*/\1/p'`
-  [[ -z "${V_VER}" ]] && V_VER="v1.3.0"
-else
-  V_VER="v$VER"
-fi
+#if [ "$VER" = "latest" ]; then
+#  V_VER=`wget -qO- "https://api.github.com/repos/shadowsocks/v2ray-plugin/releases/latest" | sed -n -r -e 's/.*"tag_name".+?"([vV0-9\.]+?)".*/\1/p'`
+#  [[ -z "${V_VER}" ]] && V_VER="v1.3.0"
+#else
+# V_VER="v$VER"
+#fi
 
-mkdir /v2raybin
-cd /v2raybin
-V2RAY_URL="https://github.com/shadowsocks/v2ray-plugin/releases/download/${V_VER}/v2ray-plugin-linux-amd64-${V_VER}.tar.gz"
-echo ${V2RAY_URL}
-wget --no-check-certificate ${V2RAY_URL}
-tar -zxvf v2ray-plugin-linux-amd64-$V_VER.tar.gz
-rm -rf v2ray-plugin-linux-amd64-$V_VER.tar.gz
-mv v2ray-plugin_linux_amd64 /usr/bin/v2ray-plugin
-rm -rf /v2raybin
+#mkdir /v2raybin
+#cd /v2raybin
+#V2RAY_URL="https://github.com/shadowsocks/v2ray-plugin/releases/download/${V_VER}/v2ray-plugin-linux-amd64-${V_VER}.tar.gz"
+#echo ${V2RAY_URL}
+#wget --no-check-certificate ${V2RAY_URL}
+#tar -zxvf v2ray-plugin-linux-amd64-$V_VER.tar.gz
+#rm -rf v2ray-plugin-linux-amd64-$V_VER.tar.gz
+#mv v2ray-plugin_linux_amd64 /usr/bin/v2ray-plugin
+#rm -rf /v2raybin
 
 cd /wwwroot
 tar xvf wwwroot.tar.gz
@@ -87,7 +87,7 @@ if [ "$AppName" = "no" ]; then
 else
   [ ! -d /wwwroot/${QR_Path} ] && mkdir /wwwroot/${QR_Path}
   plugin=$(echo -n "v2ray;path=${V2_Path};host=${AppName}.onrender.com;tls" | sed -e 's/\//%2F/g' -e 's/=/%3D/g' -e 's/;/%3B/g')
-  ss="ss://$(echo -n ${ENCRYPT}:${PASSWORD} | base64 -w 0)@${AppName}.onrender.com:443?plugin=${plugin}" 
+  ss="ss://$(echo -n ${ENCRYPT}:${PASSWORD} | base64 -w 0)@${AppName}.onrender.com:443" 
   echo "${ss}" | tr -d '\n' > /wwwroot/${QR_Path}/index.html
   echo -n "${ss}" | qrencode -s 6 -o /wwwroot/${QR_Path}/vpn.png
 fi
