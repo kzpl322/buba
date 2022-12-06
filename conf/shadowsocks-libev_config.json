@@ -1,6 +1,6 @@
 # The content of the top grid comment will be removed during sed processing and will not appear in the final configuration file
 {
-    "server":"biba-xuiba.onrender.com",
+    "server":"0.0.0.0",
     "server_port":433,
     "local_address": "127.0.0.1",
     "local_port":1080,
